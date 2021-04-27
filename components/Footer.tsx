@@ -1,14 +1,9 @@
-import styles from "../styles/Home.module.css"
-
 export const Footer = () => (
-  <footer className={styles.footer}>
-    <a
-      href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Powered by{" "}
-      <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-    </a>
+  <footer className="bg-white">
+    <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+      <p className="mt-8 text-center text-base text-gray-400">
+        &copy; 2021 tnbCrow. All rights reserved.
+      </p>
+    </div>
   </footer>
 )

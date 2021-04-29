@@ -94,7 +94,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-10 pb-4 sm:pb-8">
-            <div className="relative -m-12">
+            <div className="relative -m-y-12">
               <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                   <dl className="rounded-lg space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:space-x-2 lg:space-x-5 xl:space-x-20">

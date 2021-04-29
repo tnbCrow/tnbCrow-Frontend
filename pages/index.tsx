@@ -8,6 +8,11 @@ import { Footer } from "@components/Footer"
 import { Header } from "@components/Header"
 import { Table } from "@components/Table"
 
+const Data = [
+  { title: "2M", subtitle: "Total Coins Escrowed" },
+  { title: "$0.038", subtitle: "Last 20 Trades" },
+  { title: "$80,000", subtitle: "Transactions Escrowed" },
+]
 const trades = [
   {
     transactionId: "tnbesc900023840-2i",
@@ -42,91 +47,78 @@ export default function Home() {
 
       <Header />
 
-      <div>
-        <main>
-          <div className="pt-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
-            <div className="mx-auto max-w-7xl lg:px-8">
-              <div className="lg:grid lg:grid-cols-2 lg:gap-8">
-                <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
-                  <div className="lg:py-24">
-                    <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
-                      <span className="block">Buy and Sell TNB in minutes</span>
-                      <span className="block">Online using tnbCrow</span>
-                    </h1>
-                    <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                      With tnbCrow you can buy and sell TNB safely without the
-                      risk of chargebacks. Truly secure payments.
-                    </p>
-                    {/* <div className="mt-10 sm:mt-12">
-                      <form
-                        action="#"
-                        className="sm:max-w-xl sm:mx-auto lg:mx-0"
-                      >
-                        <div className="sm:flex">
-                          <div className="min-w-0 flex-1">
-                            <label htmlFor="email" className="sr-only">
-                              Email address
-                            </label>
-                            <input
-                              id="email"
-                              type="email"
-                              placeholder="Enter your email"
-                              className="block w-full px-4 py-3 rounded-md border-0 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
-                            />
-                          </div>
-                          <div className="mt-3 sm:mt-0 sm:ml-3">
-                            <button
-                              type="submit"
-                              className="block w-full py-3 px-4 rounded-md shadow bg-indigo-500 text-white font-medium hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
-                            >
-                              Start free trial
-                            </button>
-                          </div>
-                        </div>
-                        <p className="mt-3 text-sm text-gray-300 sm:mt-4">
-                          Start your free 14-day trial, no credit card
-                          necessary. By providing your email, you agree to our{" "}
-                          <a href="#" className="font-medium text-white">
-                            terms or service
-                          </a>
-                          .
-                        </p>
-                      </form>
-                    </div> */}
-                  </div>
+      <main>
+        <div className="py-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
+          <div className="mx-auto max-w-7xl lg:px-8">
+            <div className="lg:grid lg:grid-cols-2 lg:gap-8">
+              <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
+                <div className="lg:py-24">
+                  <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
+                    <span className="block">Buy and Sell TNB</span>
+                    <span className="block">Online using tnbCrow</span>
+                  </h1>
+                  <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                    With tnbCrow you can buy and sell TNB safely without the
+                    risk of chargebacks. Truly secure payments.
+                  </p>
                 </div>
-                <div className="mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative">
-                  <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
-                    {/* Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ */}
-                    {/* <img
+              </div>
+              <div className="mt-12 lg:m-0 lg:relative">
+                <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
+                  {/* Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ */}
+                  {/* <img
                       className="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
                       src="./banner.png"
                       alt=""
                     /> */}
-                  </div>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Coins / Weighted Average Rate / Total Trades */}
-          {/* <section /> */}
-
-          {/* Recent Trades */}
-          <section className="py-10 bg-gray-300 bg-opacity-40">
-            <div className="max-w-2xl lg:max-w-6xl mx-auto">
-              <Table trades={trades} />
+        </div>
+        {/* Coins / Weighted Average Rate / Total Trades */}
+        <div className="bg-gray-100 pt-12 sm:pt-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                Trusted by people from over 80 countries.
+              </h2>
             </div>
-          </section>
-          {/* How it Works */}
+            <div className="max-w-xl mx-auto text-center py-6">
+              <h2 className="text-lg text-gray-900">
+                Everyday tnbCrow aims to provide the most valuable service to
+                the community, and it is through the contributions and
+                participation of the community that we are able to showcase the
+                statistics for escrow.
+              </h2>
+            </div>
+          </div>
+          <div className="mt-10 pb-4 sm:pb-8">
+            <div className="relative -m-12">
+              <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
+                  <dl className="rounded-lg space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:space-x-2 lg:space-x-5 xl:space-x-20">
+                    {Data.map((data) => {
+                      return <Card {...data} />
+                    })}
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Recent Trades */}
+        <section className="pt-20 pb-10 bg-blue-900 bg-opacity-40">
+          <div className="max-w-2xl lg:max-w-6xl mx-auto">
+            <Table trades={trades} />
+          </div>
+        </section>
+        {/* How it Works */}
+        {/* Why TNB? */}
+        {/* Start Trading Now */}
+      </main>
 
-          {/* Why TNB? */}
-
-          {/* Start Trading Now */}
-        </main>
-
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }

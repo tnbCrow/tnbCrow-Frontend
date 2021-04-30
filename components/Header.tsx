@@ -1,4 +1,5 @@
-import { Config } from "Config"
+import Link from "next/link";
+import { Config } from "Config";
 
 export const Header = () => (
   <header className="relative bg-white">
@@ -23,9 +24,14 @@ export const Header = () => (
           </div> */}
 
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <a className="">Create Account</a>
+            <Link href="/signup">
+              <a className="">Create Account</a>
+            </Link>
 
-            <a className="ml-8">Sign in</a>
+            <Link href="login">
+              <a className="ml-8">Sign in</a>
+            </Link>
+
             <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-900 hover:bg-gray-800">
               Post Request
             </a>
@@ -34,4 +40,4 @@ export const Header = () => (
       </div>
     </>
   </header>
-)
+);

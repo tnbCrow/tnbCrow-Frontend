@@ -13,7 +13,7 @@ export default function ResetPassword() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div className="py-36 bg-gray-100 flex justify-center items-center ">
+      <div className="py-52 bg-gray-100 flex justify-center items-center ">
         <FormCard>
           <dd className="text-xl">Reset Password</dd>
           <form

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 
 export const FormCard: FC = ({ children }) => (
-  <div className="bg-white shadow-md p-8 lg:p-10 xl:p-12 lg:w-2/6 xl:w-2/6 items-center flex flex-col w-96 space-y-4 > *">
+  <div className="bg-white shadow-md p-8 lg:p-10 xl:p-12 lg:w-3/6 xl:w-2/6 items-center flex flex-col w-96 space-y-4 > *">
     {children}
   </div>
 );
@@ -48,7 +48,7 @@ export const FormButton: FC<ButtonHTMLAttributes<any>> = ({
   ...buttonAttributes
 }) => (
   <button
-    className="bg-blue-900 w-full text-white rounded-full border-black p-1"
+    className="bg-gray-900 w-full text-white rounded-full border-black p-1"
     {...buttonAttributes}
   >
     {children}

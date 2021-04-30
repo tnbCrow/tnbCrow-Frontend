@@ -15,7 +15,7 @@ export default function Signup() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div className="py-36 bg-gray-100 flex justify-center items-center ">
+      <div className="py-20 bg-gray-100 flex justify-center items-center ">
         <FormCard>
           <dd className="text-xl">Sign Up</dd>
           <form
@@ -23,6 +23,7 @@ export default function Signup() {
             method="post"
             className="flex flex-col items-center items-center w-full space-y-4 > *"
           >
+            <FormInput label="Username" name="username" type="text" required />
             <FormInput label="Email" name="email" type="text" required />
             <FormInput
               label="Password"

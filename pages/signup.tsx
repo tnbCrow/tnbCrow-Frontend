@@ -40,13 +40,13 @@ export default function Signup() {
           </form>
           <p className="text-sm text-gray-400">
             By registering you agree to tnbCrow's{" "}
-            <a className="text-blue-900 hover:underline">
+            <a className="text-gray-900 hover:underline">
               Terms of Using the TnbCrow Platform
             </a>{" "}
-            and <a className="text-blue-900 hover:underline">Privacy Policy</a>
+            and <a className="text-gray-900 hover:underline">Privacy Policy</a>
           </p>
           <Link href="/login">
-            <a className="text-sm text-blue-900 hover:underline">
+            <a className="text-sm text-gray-900 hover:underline">
               Already have an account? Log in
             </a>
           </Link>

@@ -38,7 +38,7 @@ export default function Login() {
             <FormButton type="submit"> Sign In</FormButton>
           </form>
           <Link href="/signup">
-            <a className="text-sm text-indigo-900 hover:underline">
+            <a className="text-sm text-gray-900 hover:underline">
               Register an Account
             </a>
           </Link>

@@ -8,6 +8,8 @@ import { Footer } from "@components/Footer"
 import { Header } from "@components/Header"
 import { Table } from "@components/Table"
 
+import { Release } from "@components/svgs/Release"
+
 const Data = [
   { title: "2M", subtitle: "Total Coins Escrowed" },
   { title: "$0.038", subtitle: "Last 20 Trades" },
@@ -32,6 +34,33 @@ const trades = [
   },
   // More trades...
 ]
+
+interface Props {
+  step: Steps
+}
+
+enum Steps {
+  AgreeToTerms,
+  SellerSubmitsPayment,
+  BuyerMakesPayment,
+  SellerApproval,
+  Release,
+}
+
+const HowItWorks = ({ step }: Props) => {
+  switch (step) {
+    case Steps.AgreeToTerms:
+    case Steps.SellerSubmitsPayment:
+    case Steps.BuyerMakesPayment:
+    case Steps.SellerApproval:
+    case Steps.Release:
+      return (
+        <div className="flex justify-center">
+          <Release />
+        </div>
+      )
+  }
+}
 
 export default function Home() {
   return (
@@ -116,6 +145,14 @@ export default function Home() {
         {/* How it Works */}
         {/* Why TNB? */}
         {/* Start Trading Now */}
+
+        <div className="grid grid-col-5">
+          <HowItWorks step={Steps.AgreeToTerms} />
+          <HowItWorks step={Steps.SellerSubmitsPayment} />
+          <HowItWorks step={Steps.BuyerMakesPayment} />
+          <HowItWorks step={Steps.SellerApproval} />
+          <HowItWorks step={Steps.Release} />
+        </div>
       </main>
 
       <Footer />

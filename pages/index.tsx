@@ -1,5 +1,4 @@
 import Head from "next/head"
-import styles from "../styles/Home.module.css"
 
 import { Config } from "../Config"
 
@@ -15,6 +14,7 @@ const Data = [
   { title: "$0.038", subtitle: "Last 20 Trades" },
   { title: "$80,000", subtitle: "Transactions Escrowed" },
 ]
+
 const trades = [
   {
     transactionId: "tnbesc900023840-2i",
@@ -127,8 +127,8 @@ export default function Home() {
               <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                   <dl className="rounded-lg space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:space-x-2 lg:space-x-5 xl:space-x-20">
-                    {Data.map((data) => {
-                      return <Card {...data} />
+                    {Data.map((data, index) => {
+                      return <Card {...data} key={`card-${index}`} />
                     })}
                   </dl>
                 </div>
@@ -146,13 +146,15 @@ export default function Home() {
         {/* Why TNB? */}
         {/* Start Trading Now */}
 
-        <div className="grid grid-col-5">
-          <HowItWorks step={Steps.AgreeToTerms} />
-          <HowItWorks step={Steps.SellerSubmitsPayment} />
-          <HowItWorks step={Steps.BuyerMakesPayment} />
-          <HowItWorks step={Steps.SellerApproval} />
-          <HowItWorks step={Steps.Release} />
-        </div>
+        <section className="py-10">
+          <div className="grid grid-col-5">
+            <HowItWorks step={Steps.AgreeToTerms} />
+            <HowItWorks step={Steps.SellerSubmitsPayment} />
+            <HowItWorks step={Steps.BuyerMakesPayment} />
+            <HowItWorks step={Steps.SellerApproval} />
+            <HowItWorks step={Steps.Release} />
+          </div>
+        </section>
       </main>
 
       <Footer />

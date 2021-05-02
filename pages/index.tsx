@@ -7,7 +7,7 @@ import { Card } from "@components/Card"
 import { Footer } from "@components/Footer"
 import { Header } from "@components/Header"
 import { Table } from "@components/Table"
-
+import {FormButton} from '@components/FormComponents'
 const Data = [
   { title: "2M", subtitle: "Total Coins Escrowed" },
   { title: "$0.038", subtitle: "Last 20 Trades" },
@@ -44,37 +44,47 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Roboto"
         />
       </Head>
-
       <Header />
-
       <main>
-        <div className="py-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
-          <div className="mx-auto max-w-7xl lg:px-8">
-            <div className="lg:grid lg:grid-cols-2 lg:gap-8">
-              <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
-                <div className="lg:py-24">
-                  <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
-                    <span className="block">Buy and Sell TNB</span>
-                    <span className="block">Online using tnbCrow</span>
-                  </h1>
-                  <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                    With tnbCrow you can buy and sell TNB safely without the
-                    risk of chargebacks. Truly secure payments.
-                  </p>
-                </div>
+        <div className="relative landing_hero flex flex-col justify-center py-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
+          <img src="/hand_and_phones.png" className='absolute hidden lg:block -mt-36 right-0' alt=""/>
+            <div className='w-full lg:w-1/2 flex flex-col px-10 lg:pl-20 justify-center min-h-full'>
+              <h1 className="mt-4 text-4xl tracking-tight font-normal text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-5xl">
+                <span className="block">Buy and Sell TNB in minutes</span>
+                <span className="block">Online using tnbCrow</span>
+              </h1>
+              <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                With tnbCrow you can buy and sell TNB safely without the
+                risk of chargebacks. Truly secure payments.
+              </p>
+            </div>
+            <div className='px-10 lg:pl-20 w-full lg:w-2/5 mt-5 flex flex-col justify-center'>
+              <div className='flex flex-row w-full bg-white rounded-md'>
+                <select className='px-4 py-3 rounded-l-md grid w-1/3'>
+                  <option value="">I'm <span className='font-extrabold text-black'>Selling</span></option>
+                  <option value="">I'm <span className='font-extrabold text-black'>Buying</span></option>
+                </select>
+                <div className='border-l-2 m-2 '></div>
+                <input className='text-center w-2/3  bg-white rounded-r-md text-black' placeholder='Amount'/>
               </div>
-              <div className="mt-12 lg:m-0 lg:relative">
-                <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
-                  {/* Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ */}
-                  {/* <img
-                      className="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
-                      src="./banner.png"
-                      alt=""
-                    /> */}
-                </div>
+              <div className='flex flex-row w-full mt-5 bg-white rounded-md'>
+                <select className='px-4 py-3 rounded-l-md grid w-3/5'>
+                  <option value="">Transaction <span className='font-extrabold text-black'>Type</span></option>
+                  <option value="">I'm Buying</option>
+                  <option value="">I'm Buying</option>
+                </select>
+                <div className='border-l-2 m-2 '></div>
+                <select className='px-4 py-3 rounded-r-md grid w-2/3'>
+                  <option value="">Payment Method</option>
+                  <option value="">Cash<span className='font-extrabold text-black'></span></option>
+                  <option value="">Card<span className='font-extrabold text-black'></span></option>
+                </select>
+              </div>
+              <div className='w-full lg:w-2/5 mt-5'>
+
+                <FormButton>Get started now</FormButton>
               </div>
             </div>
-          </div>
         </div>
         {/* Coins / Weighted Average Rate / Total Trades */}
         <div className="bg-gray-100 pt-12 sm:pt-16">

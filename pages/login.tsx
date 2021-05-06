@@ -20,7 +20,7 @@ export default function Login() {
           <form
             action=""
             method="post"
-            className="flex flex-col items-center items-center w-full space-y-4 > *"
+            className="flex flex-col items-center w-full space-y-4 > *"
           >
             <FormInput label="Email" name="email" type="text" required />
             <FormInput

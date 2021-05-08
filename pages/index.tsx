@@ -1,18 +1,15 @@
-import Head from "next/head"
-import styles from "../styles/Home.module.css"
-
-import { Config } from "../Config"
+import { Layout } from "@components/Layout"
 
 import { Card } from "@components/Card"
-import { Footer } from "@components/Footer"
-import { Header } from "@components/Header"
 import { Table } from "@components/Table"
+import { HowItWorksStep, Steps } from "@components/HowItWorks"
 
 const Data = [
   { title: "2M", subtitle: "Total Coins Escrowed" },
   { title: "$0.038", subtitle: "Last 20 Trades" },
   { title: "$80,000", subtitle: "Transactions Escrowed" },
 ]
+
 const trades = [
   {
     transactionId: "tnbesc900023840-2i",
@@ -35,19 +32,8 @@ const trades = [
 
 export default function Home() {
   return (
-    <div>
-      <Head>
-        <title>{Config.title}</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Roboto"
-        />
-      </Head>
-
-      <Header />
-
-      <main>
+    <>
+      <Layout>
         <div className="py-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
           <div className="mx-auto max-w-7xl lg:px-8">
             <div className="lg:grid lg:grid-cols-2 lg:gap-8">
@@ -98,8 +84,8 @@ export default function Home() {
               <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
                   <dl className="rounded-lg space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:space-x-2 lg:space-x-5 xl:space-x-20">
-                    {Data.map((data) => {
-                      return <Card {...data} />
+                    {Data.map((data, index) => {
+                      return <Card {...data} key={`card-${index}`} />
                     })}
                   </dl>
                 </div>
@@ -113,12 +99,43 @@ export default function Home() {
             <Table trades={trades} />
           </div>
         </section>
-        {/* How it Works */}
-        {/* Why TNB? */}
-        {/* Start Trading Now */}
-      </main>
 
-      <Footer />
-    </div>
+        {/* How it Works */}
+        <section className="py-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl pb-4">
+              How it Works
+            </h2>
+            <p className="pb-8">
+              in 5 easy steps, you are done trading either you are a buyer or
+              seller
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="py-4 md:px-8 grid grid-cols-2 md:grid-cols-5">
+              <HowItWorksStep step={Steps.AgreeToTerms} />
+              <HowItWorksStep step={Steps.SellerSubmitsPayment} />
+              <HowItWorksStep step={Steps.BuyerMakesPayment} />
+              <HowItWorksStep step={Steps.SellerApproval} />
+              <HowItWorksStep step={Steps.Release} />
+            </div>
+          </div>
+
+          <div className="py-10">
+            <div className="max-w-4xl mx-auto justify-center flex">
+              <div className="">
+                <button className="px-8 py-2 bg-gray-900  text-white rounded-full border-black p-1">
+                  Get Started now
+                </button>
+                <div className="py-4">
+                  <p>LEARN MORE ABOUT TNB</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Layout>
+    </>
   )
 }

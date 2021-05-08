@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Config } from "Config";
+import Link from "next/link"
+import { Config } from "Config"
 
 export const Header = () => (
   <header className="relative bg-white">
@@ -7,7 +7,7 @@ export const Header = () => (
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="#" className="inline-flex items-center">
+            <a href="/" className="inline-flex items-center">
               <img
                 className="h-8 w-auto sm:h-10"
                 src="./logo.png"
@@ -40,4 +40,4 @@ export const Header = () => (
       </div>
     </>
   </header>
-);
+)

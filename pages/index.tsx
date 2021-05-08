@@ -2,6 +2,7 @@ import { Layout } from "@components/Layout"
 
 import { Card } from "@components/Card"
 import { Table } from "@components/Table"
+import { HowItWorksStep, Steps } from "@components/HowItWorks"
 
 const Data = [
   { title: "2M", subtitle: "Total Coins Escrowed" },
@@ -28,58 +29,6 @@ const trades = [
   },
   // More trades...
 ]
-
-interface Props {
-  step: Steps
-}
-
-enum Steps {
-  AgreeToTerms = "AgreeToTerms",
-  SellerSubmitsPayment = "SellerSubmitsPayment",
-  BuyerMakesPayment = "BuyerMakesPayment",
-  SellerApproval = "SellerApproval",
-  Release = "Release",
-}
-
-const HowItWorks = ({ step }: Props) => {
-  const component = {
-    AgreeToTerms: {
-      image: <img className="w-20 h-20" src="/assets/AgreeToTerms.svg" />,
-      text: "1. Buyer and Seller agree to terms",
-    },
-    SellerSubmitsPayment: {
-      image: (
-        <img className="w-20 h-20" src="/assets/SellerSubmitsPayment.svg" />
-      ),
-      text: "2. Seller submits payment to tnbCrow.",
-    },
-    BuyerMakesPayment: {
-      image: <img className="w-20 h-20" src="/assets/BuyerMakesPayment.svg" />,
-      text: "3. Buyer makes payment to seller.",
-    },
-    SellerApproval: {
-      image: (
-        <img className="w-20 h-20" src="/assets/SellerApprovesPayment.svg" />
-      ),
-      text: "4. Seller  approves payment.",
-    },
-    Release: {
-      image: <img className="w-20 h-20" src="/assets/Release.svg" />,
-      text: "5. tnbCrow releases payment to Buyer.",
-    },
-  }
-
-  return (
-    <div className="col-span-2 py-2 md:py-0 md:col-span-1 justify-center text-center">
-      <div className="flex justify-center text-center items-center">
-        {component[step]?.image}
-      </div>
-      <span className="text-xs sm:text-sm md:text-md">
-        {component[step]?.text}
-      </span>
-    </div>
-  )
-}
 
 export default function Home() {
   return (
@@ -152,9 +101,6 @@ export default function Home() {
         </section>
 
         {/* How it Works */}
-        {/* Why TNB? */}
-        {/* Start Trading Now */}
-
         <section className="py-10">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl pb-4">
@@ -166,12 +112,14 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="py-4 grid grid-cols-2 md:grid-cols-5">
-            <HowItWorks step={Steps.AgreeToTerms} />
-            <HowItWorks step={Steps.SellerSubmitsPayment} />
-            <HowItWorks step={Steps.BuyerMakesPayment} />
-            <HowItWorks step={Steps.SellerApproval} />
-            <HowItWorks step={Steps.Release} />
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="py-4 md:px-8 grid grid-cols-2 md:grid-cols-5">
+              <HowItWorksStep step={Steps.AgreeToTerms} />
+              <HowItWorksStep step={Steps.SellerSubmitsPayment} />
+              <HowItWorksStep step={Steps.BuyerMakesPayment} />
+              <HowItWorksStep step={Steps.SellerApproval} />
+              <HowItWorksStep step={Steps.Release} />
+            </div>
           </div>
 
           <div className="py-10">

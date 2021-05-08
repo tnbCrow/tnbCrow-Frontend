@@ -1,13 +1,7 @@
-import Head from "next/head"
-
-import { Config } from "../Config"
+import { Layout } from "@components/Layout"
 
 import { Card } from "@components/Card"
-import { Footer } from "@components/Footer"
-import { Header } from "@components/Header"
 import { Table } from "@components/Table"
-
-import { Release } from "@components/svgs/Release"
 
 const Data = [
   { title: "2M", subtitle: "Total Coins Escrowed" },
@@ -40,43 +34,57 @@ interface Props {
 }
 
 enum Steps {
-  AgreeToTerms,
-  SellerSubmitsPayment,
-  BuyerMakesPayment,
-  SellerApproval,
-  Release,
+  AgreeToTerms = "AgreeToTerms",
+  SellerSubmitsPayment = "SellerSubmitsPayment",
+  BuyerMakesPayment = "BuyerMakesPayment",
+  SellerApproval = "SellerApproval",
+  Release = "Release",
 }
 
 const HowItWorks = ({ step }: Props) => {
-  switch (step) {
-    case Steps.AgreeToTerms:
-    case Steps.SellerSubmitsPayment:
-    case Steps.BuyerMakesPayment:
-    case Steps.SellerApproval:
-    case Steps.Release:
-      return (
-        <div className="flex justify-center">
-          <Release />
-        </div>
-      )
+  const component = {
+    AgreeToTerms: {
+      image: <img className="w-20 h-20" src="/assets/AgreeToTerms.svg" />,
+      text: "1. Buyer and Seller agree to terms",
+    },
+    SellerSubmitsPayment: {
+      image: (
+        <img className="w-20 h-20" src="/assets/SellerSubmitsPayment.svg" />
+      ),
+      text: "2. Seller submits payment to tnbCrow.",
+    },
+    BuyerMakesPayment: {
+      image: <img className="w-20 h-20" src="/assets/BuyerMakesPayment.svg" />,
+      text: "3. Buyer makes payment to seller.",
+    },
+    SellerApproval: {
+      image: (
+        <img className="w-20 h-20" src="/assets/SellerApprovesPayment.svg" />
+      ),
+      text: "4. Seller  approves payment.",
+    },
+    Release: {
+      image: <img className="w-20 h-20" src="/assets/Release.svg" />,
+      text: "5. tnbCrow releases payment to Buyer.",
+    },
   }
+
+  return (
+    <div className="col-span-2 py-2 md:py-0 md:col-span-1 justify-center text-center">
+      <div className="flex justify-center text-center items-center">
+        {component[step]?.image}
+      </div>
+      <span className="text-xs sm:text-sm md:text-md">
+        {component[step]?.text}
+      </span>
+    </div>
+  )
 }
 
 export default function Home() {
   return (
-    <div>
-      <Head>
-        <title>{Config.title}</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Roboto"
-        />
-      </Head>
-
-      <Header />
-
-      <main>
+    <>
+      <Layout>
         <div className="py-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
           <div className="mx-auto max-w-7xl lg:px-8">
             <div className="lg:grid lg:grid-cols-2 lg:gap-8">
@@ -142,22 +150,44 @@ export default function Home() {
             <Table trades={trades} />
           </div>
         </section>
+
         {/* How it Works */}
         {/* Why TNB? */}
         {/* Start Trading Now */}
 
         <section className="py-10">
-          <div className="grid grid-col-5">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl pb-4">
+              How it Works
+            </h2>
+            <p className="pb-8">
+              in 5 easy steps, you are done trading either you are a buyer or
+              seller
+            </p>
+          </div>
+
+          <div className="py-4 grid grid-cols-2 md:grid-cols-5">
             <HowItWorks step={Steps.AgreeToTerms} />
             <HowItWorks step={Steps.SellerSubmitsPayment} />
             <HowItWorks step={Steps.BuyerMakesPayment} />
             <HowItWorks step={Steps.SellerApproval} />
             <HowItWorks step={Steps.Release} />
           </div>
-        </section>
-      </main>
 
-      <Footer />
-    </div>
+          <div className="py-10">
+            <div className="max-w-4xl mx-auto justify-center flex">
+              <div className="">
+                <button className="px-8 py-2 bg-gray-900  text-white rounded-full border-black p-1">
+                  Get Started now
+                </button>
+                <div className="py-4">
+                  <p>LEARN MORE ABOUT TNB</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Layout>
+    </>
   )
 }

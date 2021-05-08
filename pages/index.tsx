@@ -5,35 +5,13 @@ import { TradesTable } from "@components/TradesTable"
 import { HowItWorksStep, Steps } from "@components/HowItWorks"
 
 const MockData = {
-  amountEscrowed: 80000,
-  totalNumberOfCoins: 2000000,
-  totalNumberOfTransactions: 1000,
-  weightedAverage: 0.038,
-  lastRate: 0.038,
-  updatedAt: new Date().toISOString(),
+  amountEscrowed: 18127,
+  totalNumberOfCoins: 657500,
+  totalNumberOfTransactions: 19,
+  weightedAverage: 275,
+  lastRate: 310,
+  updatedAt: "2021-05-05T02:10:24.838236Z",
 }
-
-const trades = [
-  {
-    transactionId: "tnbesc900023840-2i",
-    buyer: "*********",
-    seller: "*********",
-    rate: "$0.035",
-    amount: "30,000",
-    createdAt: "2 days ago",
-  },
-  {
-    transactionId: "tnbesc900023840-2i",
-    buyer: "*********",
-    seller: "*********",
-    rate: "$0.035",
-    amount: "30,000",
-    createdAt: "2 days ago",
-  },
-  // More trades...
-]
-
-//
 
 export default function Home({
   statistics: {
@@ -206,7 +184,7 @@ const fetchStatistics = async () => {
     `https://tnbcrow.pythonanywhere.com/statistics?format=json`
   )
   const response = await res.json()
-  return transformStatistics(response[0])
+  return transformStatistics(response?.results[0])
 }
 
 const fetchTrades = async () => {
@@ -220,6 +198,7 @@ const fetchTrades = async () => {
 export async function getServerSideProps() {
   const statistics = await fetchStatistics()
   const trades = await fetchTrades()
+
   return {
     props: {
       statistics,

@@ -1,7 +1,7 @@
 import { Layout } from "@components/Layout"
 
 import { Card } from "@components/Card"
-import { Table } from "@components/Table"
+import { TradesTable } from "@components/TradesTable"
 import { HowItWorksStep, Steps } from "@components/HowItWorks"
 
 const MockData = {
@@ -44,6 +44,7 @@ export default function Home({
     lastRate,
     updatedAt,
   },
+  trades,
 }) {
   return (
     <>
@@ -133,7 +134,7 @@ export default function Home({
         {/* Recent Trades */}
         <section className="pt-20 pb-10 bg-blue-900 bg-opacity-40">
           <div className="max-w-2xl lg:max-w-6xl mx-auto">
-            <Table trades={trades} />
+            <TradesTable trades={trades} />
           </div>
         </section>
 
@@ -177,7 +178,7 @@ export default function Home({
   )
 }
 
-const transformData = (data) => {
+const transformStatistics = (data) => {
   return {
     amountEscrowed: data?.total_transactions ?? MockData.amountEscrowed,
     totalNumberOfCoins: data?.total_coins ?? MockData.totalNumberOfCoins,
@@ -189,17 +190,40 @@ const transformData = (data) => {
   }
 }
 
-export async function getServerSideProps() {
+const transformTrades = (data) => {
+  return data.map((entry) => {
+    return {
+      agent: entry?.agent,
+      amount: entry?.amount,
+      rate: entry?.rate,
+      createdAt: entry.created_at,
+    }
+  })
+}
+
+const fetchStatistics = async () => {
   const res = await fetch(
     `https://tnbcrow.pythonanywhere.com/statistics?format=json`
   )
-  let response = await res.json()
+  const response = await res.json()
+  return transformStatistics(response[0])
+}
 
-  let data = transformData(response[0])
+const fetchTrades = async () => {
+  const res = await fetch(
+    `https://tnbcrow.pythonanywhere.com/recent-trades?ordering=-created_at`
+  )
+  const response = await res.json()
+  return transformTrades(response?.results)
+}
 
+export async function getServerSideProps() {
+  const statistics = await fetchStatistics()
+  const trades = await fetchTrades()
   return {
     props: {
-      statistics: { ...data },
-    }, // will be passed to the page component as props
+      statistics,
+      trades,
+    },
   }
 }

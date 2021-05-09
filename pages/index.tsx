@@ -1,36 +1,29 @@
 import { Layout } from "@components/Layout"
 
 import { Card } from "@components/Card"
-import { Table } from "@components/Table"
+import { TradesTable } from "@components/TradesTable"
 import { HowItWorksStep, Steps } from "@components/HowItWorks"
 
-const Data = [
-  { title: "2M", subtitle: "Total Coins Escrowed" },
-  { title: "$0.038", subtitle: "Last 20 Trades" },
-  { title: "$80,000", subtitle: "Transactions Escrowed" },
-]
+const MockData = {
+  amountEscrowed: 18127,
+  totalNumberOfCoins: 657500,
+  totalNumberOfTransactions: 19,
+  weightedAverage: 275,
+  lastRate: 310,
+  updatedAt: "2021-05-05T02:10:24.838236Z",
+}
 
-const trades = [
-  {
-    transactionId: "tnbesc900023840-2i",
-    buyer: "*********",
-    seller: "*********",
-    rate: "$0.035",
-    amount: "30,000",
-    createdAt: "2 days ago",
+export default function Home({
+  statistics: {
+    amountEscrowed,
+    totalNumberOfCoins,
+    totalNumberOfTransactions,
+    weightedAverage,
+    lastRate,
+    updatedAt,
   },
-  {
-    transactionId: "tnbesc900023840-2i",
-    buyer: "*********",
-    seller: "*********",
-    rate: "$0.035",
-    amount: "30,000",
-    createdAt: "2 days ago",
-  },
-  // More trades...
-]
-
-export default function Home() {
+  trades,
+}) {
   return (
     <>
       <Layout>
@@ -64,7 +57,7 @@ export default function Home() {
         </div>
         {/* Coins / Weighted Average Rate / Total Trades */}
         <div className="bg-gray-100 pt-12 sm:pt-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
                 Trusted by people from over 80 countries.
@@ -79,14 +72,37 @@ export default function Home() {
               </h2>
             </div>
           </div>
-          <div className="mt-10 pb-4 sm:pb-8">
+          <div className="py-4 md:py-8">
             <div className="relative -m-y-12">
               <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
-                  <dl className="rounded-lg space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:space-x-2 lg:space-x-5 xl:space-x-20">
-                    {Data.map((data, index) => {
-                      return <Card {...data} key={`card-${index}`} />
-                    })}
+                  <dl className="rounded-lg space-y-10 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-10">
+                    <Card
+                      title={`$${amountEscrowed.toLocaleString()}`}
+                      subtitle="Transaction Amount"
+                    />
+                    <Card
+                      title={totalNumberOfCoins.toLocaleString()}
+                      subtitle="Total number of coins"
+                    />
+                    <Card
+                      title={totalNumberOfTransactions.toLocaleString()}
+                      subtitle="Number of Transactions"
+                    />
+                    <Card
+                      title={`$${weightedAverage / 10000}`}
+                      subtitle="Weighted Average"
+                    />
+                    <Card title={`$${lastRate / 10000}`} subtitle="Last Rate" />
+                    <Card
+                      title={new Date(updatedAt).toLocaleString("en", {
+                        year: "2-digit",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "numeric",
+                      })}
+                      subtitle="Last Trade"
+                    />
                   </dl>
                 </div>
               </div>
@@ -96,7 +112,7 @@ export default function Home() {
         {/* Recent Trades */}
         <section className="pt-20 pb-10 bg-blue-900 bg-opacity-40">
           <div className="max-w-2xl lg:max-w-6xl mx-auto">
-            <Table trades={trades} />
+            <TradesTable trades={trades} />
           </div>
         </section>
 
@@ -138,4 +154,55 @@ export default function Home() {
       </Layout>
     </>
   )
+}
+
+const transformStatistics = (data) => {
+  return {
+    amountEscrowed: data?.total_transactions ?? MockData.amountEscrowed,
+    totalNumberOfCoins: data?.total_coins ?? MockData.totalNumberOfCoins,
+    totalNumberOfTransactions:
+      data?.total_escrows ?? MockData.totalNumberOfTransactions,
+    weightedAverage: data?.weighted_rate ?? MockData.weightedAverage,
+    lastRate: data?.last_rate ?? MockData.lastRate,
+    updatedAt: data?.updated_at ?? MockData.updatedAt,
+  }
+}
+
+const transformTrades = (data) => {
+  return data.map((entry) => {
+    return {
+      agent: entry?.agent,
+      amount: entry?.amount,
+      rate: entry?.rate,
+      createdAt: entry.created_at,
+    }
+  })
+}
+
+const fetchStatistics = async () => {
+  const res = await fetch(
+    `https://tnbcrow.pythonanywhere.com/statistics?format=json`
+  )
+  const response = await res.json()
+  return transformStatistics(response?.results[0])
+}
+
+const fetchTrades = async () => {
+  const res = await fetch(
+    `https://tnbcrow.pythonanywhere.com/recent-trades?ordering=-created_at`
+  )
+  const response = await res.json()
+  return transformTrades(response?.results)
+}
+
+export async function getServerSideProps() {
+  const statistics = await fetchStatistics()
+  const trades = await fetchTrades()
+
+  return {
+    props: {
+      statistics,
+      trades,
+    },
+  }
 }

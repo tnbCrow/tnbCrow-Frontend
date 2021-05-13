@@ -1,13 +1,14 @@
 module.exports = {
-  purge: ['./pages/**/*.tsx', './components/*.tsx'],
+  purge: ["./pages/**/*.tsx", "./components/*.tsx"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      sans: ["'Roboto'"]
+      sans: ["'Roboto'"],
     },
     extend: {
       colors: {
-        "dark": "#222",
+        dark: "#222",
+        primary: "#32325D",
       },
     },
   },
@@ -15,4 +16,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};

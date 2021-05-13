@@ -9,6 +9,8 @@ module.exports = {
       colors: {
         dark: "#222",
         primary: "#32325D",
+        button: "#042235",
+        link: "#556CD6",
       },
     },
   },

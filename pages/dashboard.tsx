@@ -1,7 +1,8 @@
 import Head from "next/head";
+import { Button } from "@components/Button";
+import { Card } from "@components/Card";
 import { Footer } from "@components/Footer";
 import { Header } from "@components/Header";
-import { Card } from "@components/Card";
 
 import { Config } from "../Config";
 
@@ -29,7 +30,7 @@ export default function dashboard() {
           <span className="text-center">
             Trustworthy, fast, reliable. no scam.
           </span>
-          <button>Wallet</button>
+          <Button>Wallet</Button>
 
           <div className="h-full flex flex-col mt-2 justify-between">
             <div className="space-y-12 ">
@@ -69,7 +70,7 @@ export default function dashboard() {
               </div>
             </div>
 
-            <button>Edit Profile</button>
+            <Button type={"secondary"}>Edit Profile</Button>
           </div>
         </div>
         <div className=" row-start-1 row-span-1 col-start-2 col-span-3 grid grid-cols-3 gap-2 ">

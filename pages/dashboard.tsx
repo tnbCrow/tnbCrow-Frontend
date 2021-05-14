@@ -1,7 +1,7 @@
 import { Button } from "@components/Button";
 import { Card } from "@components/Card";
 import { Layout } from "@components/Layout";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export interface TradeHistory {
   date: string;
@@ -129,11 +129,36 @@ export const TransactionTable = ({ trades = [], className = "" }) => {
       </div>
       <div className="border-t px-6 py-4 flex justify-between items-center text-sm">
         <span>
-          Showing <b>10</b> of <b>{trades.length}</b>
+          Showing <b>{trades.length / 10 >= page ? 10 : trades.length % 10}</b>{" "}
+          of <b>{trades.length}</b>
         </span>
-        <span>
-          Previous <b>10</b> of <b>Next</b>
-        </span>
+        <div className="flex justify-center items-center gap-2">
+          <Button type="text" disabled={page === 1}>
+            Previous
+          </Button>
+          {(() => {
+            const buttons: ReactNode[] = [];
+            for (
+              let n = page ?? page - 1;
+              n <= (Math.ceil(trades.length / 10) < page ? page + 1 : page);
+              n++
+            ) {
+              buttons.push(
+                <button
+                  className={`${
+                    page === n ? "border border-link text-link" : ""
+                  } hover:border-2 border-link h-6 w-6`}
+                >
+                  {n}
+                </button>
+              );
+            }
+            return buttons;
+          })()}
+          <Button type="text" disabled={page >= trades.length / 10}>
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -141,16 +166,6 @@ export const TransactionTable = ({ trades = [], className = "" }) => {
 
 export default function dashboard() {
   const trades = [
-    {
-      createdAt: new Date().toISOString(),
-      transactionId: "tnbesc900023840-2i",
-      role: Role.buyer,
-      user: "Mr Sky",
-      agent: "Player-X",
-      rate: 0.02,
-      amount: 250000,
-      paymentIn: "btc",
-    },
     {
       createdAt: new Date().toISOString(),
       transactionId: "tnbesc900023840-2i",
@@ -261,7 +276,7 @@ export default function dashboard() {
             <span className="text-center">
               Trustworthy, fast, reliable. no scam.
             </span>
-            <Button>Wallet</Button>
+            <Button disabled>Wallet</Button>
 
             <div className="h-full flex flex-col justify-between">
               <div className="md:space-y-8 md:mt-8 flex md:flex-col justify-around flex-row mb-4">
@@ -302,7 +317,9 @@ export default function dashboard() {
                 </div>
               </div>
 
-              <Button type={"secondary"}>Edit Profile</Button>
+              <Button disabled type={"secondary"}>
+                Edit Profile
+              </Button>
             </div>
           </div>
           <div className=" md:row-start-1 md:row-span-1 md:col-start-2  md:col-span-3 sm:grid sm:grid-cols-3 flex flex-col gap-2 ">

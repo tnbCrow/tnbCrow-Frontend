@@ -4,12 +4,13 @@ interface ButtonProps {
   disabled?: boolean;
   full?: boolean;
   icon?: ReactNode;
-  href?: string;
   loading?: boolean;
   type?: "primary" | "secondary" | "text" | "link";
 }
 
-export const Button: FC<ButtonProps> = ({
+export const Button: FC<
+  ButtonProps | (ButtonProps & { type: "link" } & { href: string })
+> = ({
   disabled = false,
   icon = null,
   loading = false,
@@ -21,42 +22,40 @@ export const Button: FC<ButtonProps> = ({
 
   switch (type) {
     case "primary": {
-      const disabledColor = disabled ? "bg-gray-400" : "";
+      const disabledColor = disabled ? "bg-gray-400" : "hover:bg-link";
 
-      tailwind = [
-        tailwind,
-        disabledColor,
-        "bg-button text-white hover:bg-link ",
-      ].join(" ");
+      tailwind = [tailwind, disabledColor, "bg-button text-white  "].join(" ");
       break;
     }
     case "secondary": {
-      const disabledColor = disabled ? "bg-gray-100 text-gray-400" : "";
+      const disabledColor = disabled
+        ? "bg-gray-100 text-gray-400"
+        : "hover:bg-blue-50";
 
       tailwind = [
         tailwind,
         disabledColor,
-        "bg-white text-white border border-link text-link hover:bg-blue-50",
+        "bg-white text-white border border-link text-link ",
       ].join(" ");
       break;
     }
     case "text": {
-      const disabledColor = disabled ? "text-gray-400" : "";
+      const disabledColor = disabled ? "text-gray-400" : "hover:underline";
 
       tailwind = [
         tailwind,
         disabledColor,
-        "text-button border-0 text-button hover:underline focus:border focus:border-dotted",
+        "text-button border-0 text-button  focus:border focus:border-dotted",
       ].join(" ");
       break;
     }
     case "link":
-      const disabledColor = disabled ? "text-gray-400" : "";
+      const disabledColor = disabled ? "text-gray-400" : "hover:underline";
 
       tailwind = [
         tailwind,
         disabledColor,
-        "text-button border-0 text-link hover:underline ",
+        "text-button border-0 text-link  ",
       ].join(" ");
       break;
     default:

@@ -17,7 +17,7 @@ export const Button: FC<ButtonProps> = ({
   children,
   ...rest
 }) => {
-  let tailwind = `p-1 rounded-full md:h-8 lg:h-10`;
+  let tailwind = `p-1 rounded-full md:h-8 lg:h-10 max-h-10`;
 
   switch (type) {
     case "primary": {

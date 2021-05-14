@@ -22,45 +22,39 @@ export const Button: FC<
 
   switch (type) {
     case "primary": {
-      const disabledColor = disabled ? "bg-gray-400" : "hover:bg-link";
+      const buttonStyle = disabled ? "bg-gray-400" : "hover:bg-link bg-button";
 
-      tailwind = [tailwind, disabledColor, "bg-button text-white  "].join(" ");
+      tailwind = [tailwind, buttonStyle, " text-white "].join(" ");
       break;
     }
     case "secondary": {
-      const disabledColor = disabled
+      const buttonStyle = disabled
         ? "bg-gray-100 text-gray-400"
-        : "hover:bg-blue-50";
+        : "hover:bg-blue-50 text-white border border-link text-link bg-white";
 
-      tailwind = [
-        tailwind,
-        disabledColor,
-        "bg-white text-white border border-link text-link ",
-      ].join(" ");
+      tailwind = [tailwind, buttonStyle].join(" ");
       break;
     }
     case "text": {
-      const disabledColor = disabled ? "text-gray-400" : "hover:underline";
+      const buttonStyle = disabled
+        ? "text-gray-400"
+        : "hover:underline text-button border-0 text-button  focus:border focus:border-dotted";
 
-      tailwind = [
-        tailwind,
-        disabledColor,
-        "text-button border-0 text-button  focus:border focus:border-dotted",
-      ].join(" ");
+      tailwind = [tailwind, buttonStyle].join(" ");
       break;
     }
     case "link":
-      const disabledColor = disabled ? "text-gray-400" : "hover:underline";
+      const buttonStyle = disabled
+        ? "text-gray-400"
+        : "hover:underline text-button border-0 text-link";
 
-      tailwind = [
-        tailwind,
-        disabledColor,
-        "text-button border-0 text-link  ",
-      ].join(" ");
+      tailwind = [tailwind, buttonStyle].join(" ");
       break;
     default:
       break;
   }
+
+  tailwind = disabled ? tailwind.concat(" cursor-not-allowed ") : tailwind;
 
   return (
     <button className={tailwind} disabled={disabled} {...rest}>

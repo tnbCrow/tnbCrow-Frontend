@@ -276,7 +276,7 @@ export default function dashboard() {
             <span className="text-center">
               Trustworthy, fast, reliable. no scam.
             </span>
-            <Button disabled>Wallet</Button>
+            <Button>Wallet</Button>
 
             <div className="h-full flex flex-col justify-between">
               <div className="md:space-y-8 md:mt-8 flex md:flex-col justify-around flex-row mb-4">
@@ -317,9 +317,7 @@ export default function dashboard() {
                 </div>
               </div>
 
-              <Button disabled type={"secondary"}>
-                Edit Profile
-              </Button>
+              <Button type={"secondary"}>Edit Profile</Button>
             </div>
           </div>
           <div className=" md:row-start-1 md:row-span-1 md:col-start-2  md:col-span-3 sm:grid sm:grid-cols-3 flex flex-col gap-2 ">

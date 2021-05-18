@@ -70,7 +70,10 @@ export const Button: FC<ButtonProp & HTMLProps<HTMLButtonElement>> = ({
           viewBox="0 0 24 24"
         />
       ) : (
-        [<span>{icon}</span>, <span>{children}</span>]
+        <>
+          {icon}
+          <span>{children}</span>
+        </>
       )}
     </button>
   )

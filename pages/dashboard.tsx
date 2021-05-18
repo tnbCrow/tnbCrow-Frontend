@@ -27,13 +27,66 @@ enum PaymentOptions {
 export const TransactionTable = ({ trades = [], className = '' }) => {
   const limit = 10
   const [page, setPage] = useState(1)
-  const [search, setSearch] = useState('')
+  const [filteredTrades, setFilteredTrades] = useState(trades)
 
-  const updateSearch = (e: FormEvent<HTMLInputElement>) => {
-    setSearch(e.currentTarget.value)
+  const handleSearch = (e: FormEvent<HTMLInputElement>) => {
     if (page !== 1) {
       setPage(1)
     }
+
+    const search = e.currentTarget.value.toLowerCase()
+    const filtered = search
+      ? trades.filter(
+          (trade) =>
+            Object.values(PaymentOptions).find(
+              (paymentOption) =>
+                paymentOption.toLowerCase().startsWith(search) &&
+                trade.paymentIn.toLowerCase().startsWith(search)
+            ) ?? false
+        )
+      : []
+
+    setFilteredTrades(() => (filtered.length ? filtered : trades))
+  }
+
+  const pagination = () => {
+    const buttons: ReactNode[] = []
+    const lastPage = Math.ceil(filteredTrades.length / limit)
+
+    let components: number[] = []
+    if (lastPage <= 4) {
+      components = Array.from(Array(lastPage).keys()).map((n) => n + 1)
+    } else if (lastPage > 4 && page < 3) {
+      components = [1, 2, 3, lastPage]
+    } else if (page >= lastPage - 1) {
+      components = [1, lastPage - 2, lastPage - 1, lastPage]
+    } else {
+      components = [1, page - 1, page, page + 1, lastPage]
+    }
+
+    components.reduce((alt, pageNum) => {
+      if (alt + 1 !== pageNum) {
+        buttons.push(
+          <span key={`button-${pageNum}`} className="-mx-1s">
+            ...
+          </span>
+        )
+      }
+      buttons.push(
+        <button
+          key={pageNum}
+          className={`${
+            page === pageNum ? 'border border-link text-link' : ''
+          } hover:border-2 border-link h-6 w-6`}
+          onClick={() => setPage(pageNum)}
+        >
+          {pageNum}
+        </button>
+      )
+      return pageNum
+    }, 0)
+
+    return buttons
   }
 
   return (
@@ -45,10 +98,9 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
           <h3>Transaction History</h3>
           <input
             type="text"
-            value={search}
-            onChange={updateSearch}
+            onChange={handleSearch}
             placeholder="trans id, user, rate, amount, role"
-            className="rounded-full border border-solid py-1 px-3 md:w-60 lg:w-1/2 xl:w-2/5 text-sm font-normal outline-none"
+            className="rounded-full border border-solid py-1 px-3 md:w-60 lg:w-1/2 xl:w-2/5 text-sm font-normal outline-none focus:border-link"
           />
         </div>
 
@@ -103,59 +155,50 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {(() => {
-                    const filteredTrades = trades.filter(
-                      (trade) =>
-                        (Object.values(Role).find(
-                          (role) =>
-                            role.toLowerCase().startsWith(search) &&
-                            trade.role.startsWith(search)
-                        ) ||
-                          Object.values(PaymentOptions).find(
-                            (paymentOption) =>
-                              paymentOption.toLowerCase().startsWith(search) &&
-                              trade.paymentIn.startsWith(search)
-                          )) ??
-                        false
-                    )
-                    return (filteredTrades.length ? filteredTrades : trades)
+                  {(() =>
+                    filteredTrades
                       .slice((page - 1) * limit, page * limit)
-                      .map((trade, tradeIdx) => (
-                        <tr
-                          key={`trade-`}
-                          className={` border-t border-span text-left bg-white  hover:bg-gray-50`}
-                        >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm  ">
-                            {new Date(trade.createdAt).toLocaleDateString()}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm  ">
-                            {trade.transactionId}
-                          </td>
-                          <td
-                            className={` px-6 py-4 whitespace-nowrap text-sm  uppercase ${
-                              trade.role === Role.buyer
-                                ? 'text-green-500'
-                                : 'text-red-500'
-                            } `}
+                      .map((trade) => {
+                        const role = trade.buyer === 'Anon' ? 'seller' : 'buyer'
+                        const tradeWith =
+                          trade.buyer === 'Anon' ? trade.seller : trade.buyer
+
+                        return (
+                          <tr
+                            key={`trade-${trade.uuid}`}
+                            className={` border-t border-span text-left bg-white  hover:bg-gray-50`}
                           >
-                            {trade.role}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm  text-link ">
-                            {trade.user}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm  flex items-center gap-1">
-                            <span className="rounded-full bg-red-500 w-2 h-2" />{' '}
-                            {`$${trade.rate / 10000}`}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm  ">
-                            {trade.amount.toLocaleString()}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm  uppercase ">
-                            {trade.paymentIn}
-                          </td>
-                        </tr>
-                      ))
-                  })()}
+                            <td className="px-6 py-4 whitespace-nowrap text-sm  ">
+                              {new Date(trade.created_at).toLocaleDateString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm  ">
+                              {trade.uuid}
+                            </td>
+                            <td
+                              className={`px-6 py-4 whitespace-nowrap text-sm uppercase ${
+                                role === 'buyer'
+                                  ? 'text-green-500'
+                                  : 'text-red-500'
+                              } `}
+                            >
+                              {role}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm  text-link ">
+                              {tradeWith}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm  flex items-center gap-1">
+                              <span className="rounded-full bg-red-500 w-2 h-2" />{' '}
+                              {`$${trade.rate / 10000}`}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm  ">
+                              {trade.amount.toLocaleString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm  uppercase ">
+                              {trade.paymentIn}
+                            </td>
+                          </tr>
+                        )
+                      }))()}
                 </tbody>
               </table>
             </div>
@@ -166,9 +209,9 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
         <span>
           Showing{' '}
           <span className="font-bold">
-            {trades.length / 10 >= page ? 10 : trades.length % 10}
+            {(page - 1) * limit + 1} - {page * limit}
           </span>{' '}
-          of <span className="font-bold">{trades.length}</span>
+          of <span className="font-bold">{filteredTrades.length}</span>
         </span>
         <div className="flex justify-center items-center gap-2">
           <Button
@@ -180,28 +223,10 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
           >
             Previous
           </Button>
-          {(() => {
-            const buttons: ReactNode[] = []
-            for (
-              let n = page ?? page - 1;
-              n <= (Math.ceil(trades.length / 10) < page ? page + 1 : page);
-              n++
-            ) {
-              buttons.push(
-                <button
-                  className={`${
-                    page === n ? 'border border-link text-link' : ''
-                  } hover:border-2 border-link h-6 w-6`}
-                >
-                  {n}
-                </button>
-              )
-            }
-            return buttons
-          })()}
+          {pagination()}
           <Button
             type="text"
-            disabled={page >= trades.length / limit}
+            disabled={page >= filteredTrades.length / limit}
             onClick={() => {
               setPage((prev) => prev + 1)
             }}
@@ -217,15 +242,16 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
 export default function dashboard() {
   const trades = []
 
-  for (let index = 0; index < 30; index++) {
+  for (let index = 0; index < 50; index++) {
     const rand = Math.random()
+
     trades.push({
-      createdAt: new Date().toISOString(),
-      transactionId: `tnbesc90002384-${index}i`,
-      role: rand > 0.45 ? Role.seller : Role.buyer,
-      user: 'Mr Sky',
-      agent: 'Player-X',
-      rate: 0.02,
+      created_at: new Date().toISOString(),
+      uuid: `ce38264b-8155-${index}`,
+      buyer: rand > 0.5 ? 'Anon' : rand < 0.2 ? 'MrSky' : 'Hussu',
+      seller: rand <= 0.5 ? 'Anon' : rand > 7 ? 'MrSky' : 'Hussu',
+      agent: 'Agent-X',
+      rate: 234,
       amount: 250000,
       paymentIn:
         rand <= 0.3

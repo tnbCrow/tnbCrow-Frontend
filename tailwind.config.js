@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ["./pages/**/*.tsx", "./components/*.tsx"],
+  purge: ['./pages/**/*.tsx', './components/*.tsx'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
@@ -7,10 +7,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        dark: "#222",
-        primary: "#32325D",
-        button: "#042235",
-        link: "#556CD6",
+        dark: '#222',
+        primary: '#32325D',
+        button: '#042235',
+        link: '#556CD6',
       },
     },
   },
@@ -18,4 +18,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-};
+}

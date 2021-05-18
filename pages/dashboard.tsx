@@ -3,14 +3,15 @@ import { Card } from '@components/Card'
 import { Layout } from '@components/Layout'
 import { FormEvent, ReactNode, useEffect, useState } from 'react'
 
-export interface TradeHistory {
-  date: string
-  id: string
-  role: 'BUYER' | 'SELLER'
-  userId: string
+export interface Trade {
+  created_at: string
+  uuid: string
+  buyer: string
+  seller: string
+  agent: string
   rate: number
   amount: number
-  payment: 'string'
+  payment: PaymentOptions
 }
 
 enum Role {
@@ -41,7 +42,7 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
             Object.values(PaymentOptions).find(
               (paymentOption) =>
                 paymentOption.toLowerCase().startsWith(search) &&
-                trade.paymentIn.toLowerCase().startsWith(search)
+                trade.payment.toLowerCase().startsWith(search)
             ) ?? false
         )
       : []
@@ -194,7 +195,7 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
                               {trade.amount.toLocaleString()}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm  uppercase ">
-                              {trade.paymentIn}
+                              {trade.payment}
                             </td>
                           </tr>
                         )
@@ -240,7 +241,7 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
 }
 
 export default function dashboard() {
-  const trades = []
+  const trades: Trade[] = []
 
   for (let index = 0; index < 50; index++) {
     const rand = Math.random()
@@ -253,7 +254,7 @@ export default function dashboard() {
       agent: 'Agent-X',
       rate: 234,
       amount: 250000,
-      paymentIn:
+      payment:
         rand <= 0.3
           ? PaymentOptions.btc
           : rand > 0.7
@@ -270,7 +271,7 @@ export default function dashboard() {
             <div className="bg-white p-6 shadow-md flex flex-col items-center space-y-4">
               <div className="text-center flex flex-col items-center w-full">
                 <img
-                  src="http://tinygraphs.com/labs/isogrids/hexa16/TNB Crow?theme=seascape&numcolors=4&size=220&fmt=svg"
+                  src="https://tinygraphs.com/labs/isogrids/hexa16/TNB Crow?theme=seascape&numcolors=4&size=220&fmt=svg"
                   alt="Avatar"
                   className="rounded-full border-primary border-2 p-1 w-20"
                 />

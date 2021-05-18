@@ -23,7 +23,7 @@ export const Button: FC<ButtonProp & HTMLProps<HTMLButtonElement>> = ({
 }) => {
   let tailwind = `py-1 ${
     fill ? 'w-full' : 'px-5'
-  } rounded-full md:h-8 lg:h-10 max-h-10`
+  } rounded-full md:h-8 lg:h-10 max-h-10 flex space-x-2 flex-row justify-center items-center`
 
   switch (type) {
     case 'primary': {
@@ -64,12 +64,13 @@ export const Button: FC<ButtonProp & HTMLProps<HTMLButtonElement>> = ({
   return (
     <button className={tailwind} disabled={disabled} {...rest}>
       {loading ? (
-        <i className="fa fa-refresh fa-spin" style={{ marginRight: '5px' }} />
+        <svg
+          className="animate-spin h-5 w-5 border-current border-2 rounded-full border-t-link "
+          style={{ borderTopColor: 'transparent' }}
+          viewBox="0 0 24 24"
+        />
       ) : (
-        <span className="space-x-5">
-          {icon}
-          {children}
-        </span>
+        [<span>{icon}</span>, <span>{children}</span>]
       )}
     </button>
   )

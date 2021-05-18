@@ -255,8 +255,14 @@ export default function dashboard() {
               <span className="text-center">
                 Trustworthy, fast, reliable. no scam.
               </span>
-              <Button fill>Wallet</Button>
-              <Button fill type={'secondary'}>
+              <Button icon={<img src="/assets/Wallet.svg" />} fill>
+                Wallet
+              </Button>
+              <Button
+                icon={<img src="/assets/EditProfile.svg" />}
+                fill
+                type={'secondary'}
+              >
                 Edit Profile
               </Button>
             </div>

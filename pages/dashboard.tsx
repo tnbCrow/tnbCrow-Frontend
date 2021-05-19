@@ -1,7 +1,8 @@
+import { FormEvent, ReactNode, useEffect, useState } from 'react'
 import { Button } from '@components/Button'
 import { Card } from '@components/Card'
 import { Layout } from '@components/Layout'
-import { FormEvent, ReactNode, useEffect, useState } from 'react'
+import { OpenTradesTable } from '@components/OpenTradesTable'
 
 export interface Trade {
   created_at: string
@@ -29,6 +30,7 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
   const limit = 10
   const [page, setPage] = useState(1)
   const [filteredTrades, setFilteredTrades] = useState(trades)
+  const currentUser = 'Anon'
 
   const handleSearch = (e: FormEvent<HTMLInputElement>) => {
     if (page !== 1) {
@@ -37,14 +39,25 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
 
     const search = e.currentTarget.value.toLowerCase()
     const filtered = search
-      ? trades.filter(
-          (trade) =>
-            Object.values(PaymentOptions).find(
+      ? trades.filter((trade) => {
+          const role = trade.buyer === currentUser ? 'seller' : 'buyer'
+          const tradingUser = role === 'buyer' ? trade.buyer : trade.seller
+
+          return (
+            (Object.values(PaymentOptions).find(
               (paymentOption) =>
                 paymentOption.toLowerCase().startsWith(search) &&
                 trade.payment.toLowerCase().startsWith(search)
-            ) ?? false
-        )
+            ) ||
+              tradingUser.toLowerCase().includes(search) ||
+              role.startsWith(search) ||
+              new Date(trade.created_at)
+                .toLocaleDateString()
+                .includes(search) ||
+              trade.uuid.includes(search)) ??
+            false
+          )
+        })
       : []
 
     setFilteredTrades(() => (filtered.length ? filtered : trades))
@@ -240,29 +253,7 @@ export const TransactionTable = ({ trades = [], className = '' }) => {
   )
 }
 
-export default function dashboard() {
-  const trades: Trade[] = []
-
-  for (let index = 0; index < 50; index++) {
-    const rand = Math.random()
-
-    trades.push({
-      created_at: new Date().toISOString(),
-      uuid: `ce38264b-8155-${index}`,
-      buyer: rand > 0.5 ? 'Anon' : rand < 0.2 ? 'MrSky' : 'Hussu',
-      seller: rand <= 0.5 ? 'Anon' : rand > 7 ? 'MrSky' : 'Hussu',
-      agent: 'Agent-X',
-      rate: 234,
-      amount: 250000,
-      payment:
-        rand <= 0.3
-          ? PaymentOptions.btc
-          : rand > 0.7
-          ? PaymentOptions.payoneer
-          : PaymentOptions.paypal,
-    })
-  }
-
+export default function dashboard({ trades }) {
   return (
     <>
       <Layout>
@@ -330,16 +321,55 @@ export default function dashboard() {
               </div>
             </div>
           </div>
-          <div className=" md:row-start-1 md:row-span-1 md:col-start-2  md:col-span-3 sm:grid sm:grid-cols-3 flex flex-col gap-2 ">
-            <Card title="200,000" subtitle="Bought" />
-            <Card title="80,000" subtitle="Sold" />
-            <Card title="$0.031" subtitle="Weighted Average" />
-          </div>
-          <div className="bg-white shadow-md md:row-start-2 md:row-span-4 md:col-start-2 md:col-span-3 items-center ">
-            <TransactionTable trades={trades}></TransactionTable>
-          </div>
+          {
+            // condition - check if this user is the one logged in
+            true ? (
+              <>
+                <div className=" md:row-start-1 md:row-span-1 md:col-start-2  md:col-span-3 sm:grid sm:grid-cols-3 flex flex-col gap-2 ">
+                  <Card title="200,000" subtitle="Bought" />
+                  <Card title="80,000" subtitle="Sold" />
+                  <Card title="$0.031" subtitle="Weighted Average" />
+                </div>
+                <div className="bg-white shadow-md md:row-start-2 md:row-span-4 md:col-start-2 md:col-span-3 items-center ">
+                  <TransactionTable trades={trades}></TransactionTable>
+                </div>
+              </>
+            ) : (
+              <div className="md:col-span-3 bg-white shadow-md">
+                <OpenTradesTable />
+              </div>
+            )
+          }
         </div>
       </Layout>
     </>
   )
+}
+
+export async function getStaticProps(context) {
+  const trades: Trade[] = []
+  for (let index = 0; index < 50; index++) {
+    const rand = Math.random()
+
+    trades.push({
+      created_at: new Date().toISOString(),
+      uuid: `ce38264b-8155-${index}`,
+      buyer: rand > 0.5 ? 'Anon' : rand < 0.2 ? 'MrSky' : 'Hussu',
+      seller: rand <= 0.5 ? 'Anon' : rand > 7 ? 'MrSky' : 'Hussu',
+      agent: 'Agent-X',
+      rate: 234,
+      amount: 250000,
+      payment:
+        rand <= 0.3
+          ? PaymentOptions.btc
+          : rand > 0.7
+          ? PaymentOptions.payoneer
+          : PaymentOptions.paypal,
+    })
+  }
+  return {
+    props: {
+      trades,
+    }, // will be passed to the page component as props
+  }
 }

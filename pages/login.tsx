@@ -1,7 +1,6 @@
-import Head from "next/head"
-import Link from "next/link"
-import { FormButton, FormCard, FormInput } from "@components/FormComponents"
-import { Layout } from "@components/Layout"
+import Link from 'next/link'
+import { FormButton, FormCard, FormInput } from '@components/FormComponents'
+import { Layout } from '@components/Layout'
 
 export default function Login() {
   return (

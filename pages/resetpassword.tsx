@@ -1,5 +1,5 @@
-import { FormButton, FormCard, FormInput } from "@components/FormComponents"
-import { Layout } from "@components/Layout"
+import { FormButton, FormCard, FormInput } from "@components/FormComponents";
+import { Layout } from "@components/Layout";
 
 export default function ResetPassword() {
   return (
@@ -25,5 +25,5 @@ export default function ResetPassword() {
         </div>
       </Layout>
     </>
-  )
+  );
 }

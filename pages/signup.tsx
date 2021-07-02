@@ -1,7 +1,7 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { FormButton, FormCard, FormInput } from "@components/FormComponents"
-import { Layout } from "@components/Layout"
+import { FormButton, FormCard, FormInput } from "@components/FormComponents";
+import { Layout } from "@components/Layout";
 
 export default function Signup() {
   return (
@@ -53,5 +53,5 @@ export default function Signup() {
         </div>
       </Layout>
     </>
-  )
+  );
 }

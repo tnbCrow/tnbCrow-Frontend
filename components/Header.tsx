@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { Config } from "Config"
+import Link from "next/link";
+import { Config } from "Config";
 
 export const Header = () => (
   <header className="relative bg-white">
@@ -28,7 +28,7 @@ export const Header = () => (
               <a className="">Create Account</a>
             </Link>
 
-            <Link href="login">
+            <Link href="/login">
               <a className="ml-8">Sign in</a>
             </Link>
 
@@ -40,4 +40,4 @@ export const Header = () => (
       </div>
     </>
   </header>
-)
+);

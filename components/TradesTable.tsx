@@ -45,7 +45,7 @@ export const TradesTable = ({ trades }) => (
               </tr>
             </thead>
             <tbody>
-              {trades.map((trade, tradeIdx) => (
+              {trades?.map((trade, tradeIdx) => (
                 <tr
                   key={`trade-${tradeIdx}`}
                   className={tradeIdx % 2 === 0 ? "bg-white" : "bg-gray-50"}
@@ -57,7 +57,7 @@ export const TradesTable = ({ trades }) => (
                     ******
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
-                    {trade.agent}
+                    {trade.agent || 'N/A'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
                     {trade.amount.toLocaleString()}

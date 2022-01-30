@@ -171,7 +171,7 @@ const transformStatistics = (data) => {
 const transformTrades = (data) => {
   return data.map((entry) => {
     return {
-      agent: entry?.agent,
+      agent: entry?.agent ?? null,
       amount: entry?.amount,
       rate: entry?.rate,
       createdAt: entry.created_at,
@@ -184,7 +184,7 @@ const fetchStatistics = async () => {
     `https://tnbcrow.pythonanywhere.com/statistics?format=json`
   )
   const response = await res.json()
-  return transformStatistics(response?.results[0])
+  return transformStatistics(response?.length ? response[0] : [])
 }
 
 const fetchTrades = async () => {
